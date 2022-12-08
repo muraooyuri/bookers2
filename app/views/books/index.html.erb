@@ -61,26 +61,15 @@
     </thead>
     <tbody>
       <% @books.each do | book | %>
-     <tr>
-      <th><%= link_to user_path(book.user) do %><%= image_tag book.user.get_profile_image(100,100) %><% end %></th>
-      <th><%= link_to book_path(book) do %><%=book.title %><% end %></th>
-      <th><%=book.body %></th>
-        <% if book.favorited_by?(current_user) %>
-         <th>
-           <%= link_to book_favorites_path(book), method: :delete do %>
-             ♥<%= book.favorites.count %>いいね
-           <% end %>
-          </th>
-          <% else %>
-          <th>
-           <%= link_to book_favorites_path(book), method: :post do %>
-             ♡<%= book.favorites.count %>いいね
-           <% end %>
-          </th>
-          
-        <% end %>
-        <th><%= link_to "#{book.book_comments.count} コメント", book_path(book.id) %></th>
-      </tr>
+       <tr>
+        <th><%= link_to user_path(book.user) do %><%= image_tag book.user.get_profile_image(100,100) %><% end %></th>
+        <th><%= link_to book_path(book) do %><%=book.title %><% end %></th>
+         <th><%=book.body %></th>
+          <td id="favorite_buttons_<%= book.id %>">
+           <%= render "favorites/favorite", book: book %>
+          </td>
+         <th><%= link_to "#{book.book_comments.count} コメント", book_path(book.id) %></th>
+        </tr>
       <% end %>
      </tbody>
     </table>
